@@ -42,10 +42,34 @@ SwitchToLongMode:
     mov [es:di + 0x1000], eax         ; Store the value of EAX as the first PDPTE.
  
  
+  xor bh, bh ;Set to zero for loop
+
+ LoopPDE:
     ; Build the Page Directory.
     lea eax, [es:di + 0x3000]         ; Put the address of the Page Table in to EAX.
     or eax, PAGE_PRESENT | PAGE_WRITE ; Or EAX with the flags - present flag, writeable flag.
     mov [es:di + 0x2000], eax         ; Store to value of EAX as the first PDE.
+
+    lea eax, [es:di + 0x3000 + 0x200000]        
+    or eax, PAGE_PRESENT | PAGE_WRITE 
+    mov [es:di + 0x2000 + 8], eax  
+
+    lea eax, [es:di + 0x3000 + 0x200000*2]        
+    or eax, PAGE_PRESENT | PAGE_WRITE 
+    mov [es:di + 0x2000 + 8*2], eax  
+
+
+    inc bh
+
+   cmp bh, 3
+   jb LoopPDE
+
+
+
+
+
+
+
  
  
     push di                           ; Save DI for the time being.
@@ -58,7 +82,7 @@ SwitchToLongMode:
     mov [es:di], eax
     add eax, 0x1000
     add di, 8
-    cmp eax, 0x200000                 ; If we did all 2MiB, end.
+    cmp eax, 0x600000                 ; If we did all 2MiB, end.
     jb .LoopPageTable
  
     pop di                            ; Restore DI.

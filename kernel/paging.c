@@ -29,7 +29,6 @@ void memcpy (void* src, void* dest, size_t size)
 
      static struct page_table_entry pdpte;
      pdpte.present = 1;
-     pdpte.nx = 1;
      pdpte.rw = 1;
      pdpte.addr = (0xC000 >> 12);
   memcpy(&pdpte.entry, (void*)0xB000 +8*3, sizeof(pdpte.entry));

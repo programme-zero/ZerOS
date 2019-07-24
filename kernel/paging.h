@@ -39,7 +39,4 @@ struct page_table
 	struct page_table_entry e[512];
 };
 
-
-
-
 void memcpy (void* src, void* dest, size_t size);
