@@ -27,7 +27,7 @@ struct page_table_entry
 			Uint64 global  :1;
 			Uint64 ignore2 :3;
 			Uint64 addr    :40;
-      Uint64 free    :11;
+            Uint64 free    :11;
 			Uint64 nx      :1;
 		};
 		Uint64 entry;

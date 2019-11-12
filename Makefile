@@ -7,19 +7,19 @@ OBJ = ${C_SOURCES:.c=.o}
 CC = x86_64-elf-gcc
 GDB = gdb
 # -g: Use debugging symbols in gcc
-CFLAGS = -g -masm=intel
+CFLAGS = -g -masm=intel -Werror
 
 # First rule is run by default
-os-image.bin: bootsector/boot.bin kernel.bin
+os-image.bin: boot/boot.bin kernel.bin
 	cat $^ > os-image.bin
 
 # '--oformat binary' deletes all symbols as a collateral, so we don't need
 # to 'strip' them manually on this case
-kernel.bin: bootsector/kernel_entry.o ${OBJ}
+kernel.bin: boot/kernel_entry.o ${OBJ}
 	x86_64-elf-ld -o $@ -T ./kernel/linker.txt $^ --oformat binary
 
 # Used for debugging purposes
-kernel.elf: bootsector/kernel_entry.o ${OBJ}
+kernel.elf: boot/kernel_entry.o ${OBJ}
 	x86_64-elf-ld -o $@ -T ./kernel/linker.txt $^ 
 
 run: os-image.bin
