@@ -1,7 +1,7 @@
 #include "../drivers/VGA.h"
 #include "../drivers/ports.h"
 
-//Fix this ugly as fuck driver, rewrite the whole code and make it based on a struct
+//Fix this driver, rewrite the whole code and make it based on a struct
  
 static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg) 
 {
